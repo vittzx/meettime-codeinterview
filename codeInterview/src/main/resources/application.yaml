@@ -1,0 +1,10 @@
+server:
+  port: ${SERVER_PORT}
+
+spring:
+  application:
+    name: codeInterview
+    hubspot-app:
+      client-id: ${HUBSPOT_CLIENT_ID}
+      client-app: ${HUBSPOT_CLIENT_APP}
+      client-secret: ${HUBSPOT_SECRET_KEYS}
