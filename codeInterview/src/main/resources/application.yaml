@@ -4,7 +4,13 @@ server:
 spring:
   application:
     name: codeInterview
-    hubspot-app:
-      client-id: ${HUBSPOT_CLIENT_ID}
-      client-app: ${HUBSPOT_CLIENT_APP}
-      client-secret: ${HUBSPOT_SECRET_KEYS}
+
+logging:
+  level:
+    com.meet.time.interview: debug
+
+application:
+  hubspot-app:
+    client-id: ${HUBSPOT_CLIENT_ID}
+    client-app: ${HUBSPOT_CLIENT_APP}
+    client-secret: ${HUBSPOT_SECRET_KEYS}
