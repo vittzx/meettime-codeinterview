@@ -28,6 +28,7 @@ public class OAuthtRestController {
         log.debug("STARTED GET /auth/v1/token");
         String url = getAccessTokenUseCase.createRedirectUserUrl();
         log.debug("Redirecting GET /auth/v1/token to URL {}", url);
+        // response.sendRedirect(url); -> serve como opção.
         return ResponseEntity.status(HttpStatus.OK).body(
                 UrlAuthenticationResponseDTO.builder().url(url).build()
         );
