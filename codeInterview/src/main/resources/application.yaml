@@ -14,3 +14,4 @@ application:
     client-id: ${HUBSPOT_CLIENT_ID}
     client-app: ${HUBSPOT_CLIENT_APP}
     client-secret: ${HUBSPOT_SECRET_KEYS}
+    authorization-url: ${HUBSPOT_AUTHORIZATION_URL}
