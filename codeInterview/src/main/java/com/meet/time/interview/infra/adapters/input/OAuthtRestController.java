@@ -4,6 +4,7 @@ import com.meet.time.interview.application.port.input.AccessTokenUseCase;
 import com.meet.time.interview.domain.mapper.AccessTokenRestMapper;
 import com.meet.time.interview.domain.model.AccessToken;
 import com.meet.time.interview.infra.adapters.input.data.response.AccessTokenResponseDTO;
+import com.meet.time.interview.infra.adapters.input.data.response.UrlAuthenticationResponseDTO;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +24,13 @@ public class OAuthtRestController {
     private final AccessTokenRestMapper accessTokenRestMapper;
 
     @GetMapping("/token")
-    public void getAuth(HttpServletResponse response)throws IOException {
+    public ResponseEntity<UrlAuthenticationResponseDTO> getAuth(HttpServletResponse response)throws IOException {
         log.debug("STARTED GET /auth/v1/token");
         String url = getAccessTokenUseCase.createRedirectUserUrl();
         log.debug("Redirecting GET /auth/v1/token to URL {}", url);
-        response.sendRedirect(url);
+        return ResponseEntity.status(HttpStatus.OK).body(
+                UrlAuthenticationResponseDTO.builder().url(url).build()
+        );
     }
 
 
