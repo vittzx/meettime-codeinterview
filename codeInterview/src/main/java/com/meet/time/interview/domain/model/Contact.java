@@ -1,4 +1,4 @@
-package com.meet.time.interview.infra.adapters.input.data.request.contact;
+package com.meet.time.interview.domain.model;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ContactPropertiesRequestDTO {
+public class Contact {
 
     private String email;
     private String firstName;
