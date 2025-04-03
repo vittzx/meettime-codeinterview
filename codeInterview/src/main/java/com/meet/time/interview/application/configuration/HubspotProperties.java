@@ -12,7 +12,9 @@ public class HubspotProperties {
     private String clientSecret;
     private String clientApp;
     private String clientId;
-    private String authorizationUrl;
+    private String authorizationEndpoint;
+    private String baseUrl;
+    private String contactEndpoint;
 
 }
 

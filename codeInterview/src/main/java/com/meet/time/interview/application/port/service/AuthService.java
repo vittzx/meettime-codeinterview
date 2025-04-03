@@ -27,7 +27,7 @@ public class AuthService implements AccessTokenUseCase {
 
     @Override
     public String createRedirectUserUrl() {
-        final String authUrl = hubspotProperties.getAuthorizationUrl();
+        final String authUrl = hubspotProperties.getBaseUrl() + hubspotProperties.getAuthorizationEndpoint();
         final String client_id = hubspotProperties.getClientId();
 
         return authUrl + "?client_id=" + client_id + "&redirect_uri=" + redirectUri + "&scope=oauth&state=WeHH_yy2irpl8UYAvv-my";
