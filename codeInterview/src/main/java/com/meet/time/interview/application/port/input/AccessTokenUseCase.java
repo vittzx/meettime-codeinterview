@@ -1,8 +1,10 @@
 package com.meet.time.interview.application.port.input;
 
+import com.meet.time.interview.domain.model.AccessToken;
+
 public interface AccessTokenUseCase {
 
     String createRedirectUserUrl();
 
-    String returnAccessToken(String code);
+    AccessToken returnAccessToken(String code);
 }

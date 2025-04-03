@@ -40,7 +40,6 @@ public class HubspotApiRestAdapter implements HubspotUseCase {
         params.add("client_secret", secretKeys);
         params.add("redirect_uri", redirectUri);
         params.add("code", code);
-
         return new HttpEntity<>(params, headers);
 
     }
