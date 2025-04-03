@@ -1,7 +1,9 @@
 package com.meet.time.interview.infra.adapters.output.client_apis;
 
+import com.meet.time.interview.application.configuration.HubspotProperties;
 import com.meet.time.interview.application.port.output.HubspotUseCase;
 import com.meet.time.interview.infra.adapters.output.client_apis.data.response.HubspotGetAccessTokenResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,17 +14,19 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import static com.meet.time.interview.domain.utils.MessageConstants.HUBSPOT_ACCESS_TOKEN_URL;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class HubspotApiRestAdapter implements HubspotUseCase {
 
+    private final HubspotProperties hubspotProperties;
 
     @Override
     public HubspotGetAccessTokenResponse getAccessToken(String clientId, String secretKeys, String redirectUri, String code) {
         HttpEntity<MultiValueMap<String, String>> request = buildRequest(clientId, secretKeys, redirectUri, code);
-        HubspotGetAccessTokenResponse response = callRequest(HUBSPOT_ACCESS_TOKEN_URL, request);
+        String url = hubspotProperties.getBaseUrl() + hubspotProperties.getAccessTokenEndpoint();
+        HubspotGetAccessTokenResponse response = callRequest(url, request);
         return response;
     }
 

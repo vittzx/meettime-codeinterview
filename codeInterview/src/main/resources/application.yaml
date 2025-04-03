@@ -12,8 +12,11 @@ logging:
 application:
   hubspot-app:
     base-url: ${HUBSPOT_BASE_URL}
+    base-oauth-url: ${HUBSPOT_OAUTH_AUTHENTICATE_BASE_URL}
     client-id: ${HUBSPOT_CLIENT_ID}
     client-app: ${HUBSPOT_CLIENT_APP}
     client-secret: ${HUBSPOT_SECRET_KEYS}
     authorization-endpoint: ${HUBSPOT_AUTHORIZATION_ENDPOINT}
     contact-endpoint: ${HUBSPOT_CONTACT_ENDPOINT}
+    access-token-endpoint: ${HUBSPOT_ACCESS_TOKEN_ENDPOINT}
+    redirect-uri: ${HUBSPOT_REDIRECT_URI}

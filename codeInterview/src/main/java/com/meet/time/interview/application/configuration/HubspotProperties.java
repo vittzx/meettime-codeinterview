@@ -13,7 +13,10 @@ public class HubspotProperties {
     private String clientApp;
     private String clientId;
     private String authorizationEndpoint;
+    private String accessTokenEndpoint;
     private String baseUrl;
+    private String baseOauthUrl;
+    private String redirectUri;
     private String contactEndpoint;
 
 }
