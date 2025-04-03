@@ -1,8 +1,9 @@
 package com.meet.time.interview.application.port.output;
 
-import org.springframework.web.client.RestTemplate;
+import com.meet.time.interview.infra.adapters.output.client_apis.data.response.HubspotGetAccessTokenResponse;
 
 public interface HubspotUseCase {
 
-    Object getAccessToken(String url, RestTemplate restTemplate, Class type);
+    HubspotGetAccessTokenResponse getAccessToken(String clientId, String secretKeys, String redirectUri, String code);
+
 }
