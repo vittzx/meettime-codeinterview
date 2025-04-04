@@ -2,7 +2,7 @@ package com.meet.time.interview.domain.mapper;
 
 import com.meet.time.interview.domain.model.AccessToken;
 import com.meet.time.interview.infra.adapters.input.data.response.AccessTokenResponseDTO;
-import com.meet.time.interview.infra.adapters.output.client_apis.data.response.HubspotGetAccessTokenResponse;
+import com.meet.time.interview.infra.adapters.output.client_apis.data.access_token.response.HubspotGetAccessTokenResponse;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;

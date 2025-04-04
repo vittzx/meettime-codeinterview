@@ -5,7 +5,7 @@ import com.meet.time.interview.application.port.input.AccessTokenUseCase;
 import com.meet.time.interview.application.port.output.HubspotUseCase;
 import com.meet.time.interview.domain.mapper.AccessTokenRestMapper;
 import com.meet.time.interview.domain.model.AccessToken;
-import com.meet.time.interview.infra.adapters.output.client_apis.data.response.HubspotGetAccessTokenResponse;
+import com.meet.time.interview.infra.adapters.output.client_apis.data.access_token.response.HubspotGetAccessTokenResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

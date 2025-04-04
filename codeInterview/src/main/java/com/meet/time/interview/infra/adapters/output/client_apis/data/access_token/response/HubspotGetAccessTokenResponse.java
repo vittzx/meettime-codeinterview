@@ -1,4 +1,4 @@
-package com.meet.time.interview.infra.adapters.output.client_apis.data.response;
+package com.meet.time.interview.infra.adapters.output.client_apis.data.access_token.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

@@ -5,7 +5,7 @@ import com.meet.time.interview.application.port.output.HubspotUseCase;
 import com.meet.time.interview.infra.adapters.output.client_apis.data.contact.request.ContactCreatePostRequestToHubSpot;
 import com.meet.time.interview.infra.adapters.output.client_apis.data.contact.request.ContactCreatePropertiesPostRequestToHubSpot;
 import com.meet.time.interview.infra.adapters.output.client_apis.data.contact.response.CreateContactHubspotResponse;
-import com.meet.time.interview.infra.adapters.output.client_apis.data.response.HubspotGetAccessTokenResponse;
+import com.meet.time.interview.infra.adapters.output.client_apis.data.access_token.response.HubspotGetAccessTokenResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
 
 @Service
@@ -72,22 +71,22 @@ public class HubspotApiRestAdapter implements HubspotUseCase {
 
     private HubspotGetAccessTokenResponse callAccessTokenRequest(String url, HttpEntity<MultiValueMap<String, String>> request){
         log.debug("Started GET to access token on {}", url);
-
-        RestTemplate restTemplate = accessTokenRequest.initRequest();
-        ResponseEntity<HubspotGetAccessTokenResponse> response = accessTokenRequest.postMultiPartEntity(restTemplate, url, request, HubspotGetAccessTokenResponse.class);
-
-        if(!response.getStatusCode().is2xxSuccessful()){
-            log.error("ERROR: Response status code is != 200.");
-            throw new IllegalStateException("Erro ao");
-        }
+        ResponseEntity<HubspotGetAccessTokenResponse> response = accessTokenRequest.postMultiPartEntity(accessTokenRequest.initRequest(), url, request, HubspotGetAccessTokenResponse.class);
+        isResponseValid(response);
         log.debug("Finished callRequest with successfully, return body");
         return response.getBody();
     }
 
     private CreateContactHubspotResponse callCreateContactRequest(String url, HttpEntity<ContactCreatePostRequestToHubSpot> body){
         log.debug("Started POST to create contact on {}", url);
-        log.debug("Request: {}", body.getBody());
         ResponseEntity<CreateContactHubspotResponse> response = createContactOnHubspot.postJsonEntity( createContactOnHubspot.initRequest() ,url ,body, CreateContactHubspotResponse.class);
+        isResponseValid(response);
         return response.getBody();
     };
+
+    private void isResponseValid(ResponseEntity<?> response){
+        if (!(response.getStatusCode().is2xxSuccessful())){
+            throw new IllegalStateException(("Requisição inválida"));
+        }
+    }
 }

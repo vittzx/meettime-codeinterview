@@ -24,16 +24,15 @@ public class ContactService implements CreateContactUseCase {
     @Override
     public List<Contact> createContact(List<Contact> contacts, String access_token) {
         log.debug("Started craetingContacts");
+
         for (Contact contact: contacts){
-            log.debug("Contact fistName turn: {}", contact.getFirstName());
+            log.debug("Contact fistName turn: {}", contact);
             ContactCreatePropertiesPostRequestToHubSpot request = contactRestMapper.toContactCreatePropertiesPostRequestToHubSpot(contact);
             CreateContactHubspotResponse response = hubspotUseCase.createContact(request,access_token);
-            log.debug("Contact response firstName: {}", response.getProperties());
+            contact = contactRestMapper.toContact(response);
+            log.debug("Contact response firstName: {}", response);
         }
         return List.of();
     }
 
-    private String createUrltoCreateContact(){
-        return "";
-    }
 }
