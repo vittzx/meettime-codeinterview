@@ -1,19 +1,18 @@
-package com.meet.time.interview.domain.model;
+package com.meet.time.interview.infra.adapters.output.client_apis.data.contact.request;
 
 import lombok.*;
 
-@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Contact {
+@Builder
+public class ContactCreatePropertiesPostRequestToHubSpot {
 
-    private String id;
     private String email;
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
     private String phone;
     private String company;
     private String website;

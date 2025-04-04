@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CreateContactUseCase {
 
-    List<Contact> createContact(List<Contact> contacts);
+    List<Contact> createContact(List<Contact> contacts, String access_token);
 }

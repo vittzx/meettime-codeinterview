@@ -7,10 +7,7 @@ import com.meet.time.interview.infra.adapters.input.data.request.contact.CreateC
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,11 +21,10 @@ public class ContactRestController {
     private final ContactRestMapper contactRestMapper;
 
     @PostMapping
-    public ResponseEntity createContact(@RequestBody CreateContactRequestDTO request){
+    public ResponseEntity createContact(@RequestBody CreateContactRequestDTO request, @RequestHeader(name = "authorization") String accessToken){
         log.debug("STARTED POST /v1/contact body request: {}", request);
         List<Contact> contacts = contactRestMapper.toListContact(request.getContacts());
-        log.debug("Contacts: {}",contacts);
-        contacts = createContactUseCase.createContact(contacts);
+        contacts = createContactUseCase.createContact(contacts, accessToken);
         log.debug("FINISHED POST /v1/contact ");
         return ResponseEntity.ok(request.getContacts());
     }
