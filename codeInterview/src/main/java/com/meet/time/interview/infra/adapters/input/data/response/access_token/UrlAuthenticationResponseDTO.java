@@ -1,4 +1,4 @@
-package com.meet.time.interview.infra.adapters.input.data.response;
+package com.meet.time.interview.infra.adapters.input.data.response.access_token;
 
 import lombok.*;
 
