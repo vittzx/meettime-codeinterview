@@ -4,24 +4,58 @@ import com.meet.time.interview.domain.model.Contact;
 import com.meet.time.interview.infra.adapters.input.data.request.contact.ContactPropertiesRequestDTO;
 import com.meet.time.interview.infra.adapters.output.client_apis.data.contact.request.ContactCreatePropertiesPostRequestToHubSpot;
 import com.meet.time.interview.infra.adapters.output.client_apis.data.contact.response.CreateContactHubspotResponse;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
-@Mapper
-public interface ContactRestMapper {
+@Component
+@NoArgsConstructor
+public class ContactRestMapper {
 
-    List<Contact> toListContact(List<ContactPropertiesRequestDTO> contacts);
+    public List<Contact> toListContact(List<ContactPropertiesRequestDTO> contacts){
+        if(ObjectUtils.isEmpty(contacts)) return null;
 
-    @Mapping(target = "firstname", source = "firstName")
-    @Mapping(target = "lastname", source = "lastName")
-    ContactCreatePropertiesPostRequestToHubSpot toContactCreatePropertiesPostRequestToHubSpot(Contact response);
+        return contacts.stream().map((contactRequest) -> {
+            return Contact
+                    .builder()
+                    .firstName(contactRequest.getFirstName())
+                    .lastName(contactRequest.getLastName())
+                    .phone(contactRequest.getPhone())
+                    .company(contactRequest.getCompany())
+                    .website(contactRequest.getWebsite())
+                    .email(contactRequest.getEmail())
+                    .lifeCycleStage(contactRequest.getLifeCycleStage())
+                    .build();
+        }).toList();
+    }
 
+    public ContactCreatePropertiesPostRequestToHubSpot toContactCreatePropertiesPostRequestToHubSpot(Contact contact){
+        return ObjectUtils.isEmpty(contact) ? null : ContactCreatePropertiesPostRequestToHubSpot
+                .builder()
+                .phone(contact.getPhone())
+                .email(contact.getEmail())
+                .lifecyclestage(contact.getLifeCycleStage())
+                .company(contact.getCompany())
+                .website(contact.getWebsite())
+                .firstname(contact.getFirstName())
+                .lastname(contact.getLastName())
+                .build();
+    }
 
-    @Mapping(target = "firstName", source = "properties.firstname")
-    @Mapping(target = "lastName", source = "properties.lastname")
-    @Mapping(target = "c")
-    Contact toContact(CreateContactHubspotResponse response);
+    public Contact toContact(CreateContactHubspotResponse response){
+        return ObjectUtils.isEmpty(response) ? null : Contact.
+                builder()
+                .phone(response.getProperties().getPhone())
+                .id(response.getId())
+                .company(response.getProperties().getCompany())
+                .email(response.getProperties().getEmail())
+                .firstName(response.getProperties().getFirstname())
+                .lastName(response.getProperties().getLastname())
+                .website(response.getProperties().getWebsite())
+                .lifeCycleStage(response.getProperties().getWebsite())
+                .build();
+    }
 
 }

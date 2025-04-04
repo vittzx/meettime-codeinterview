@@ -10,7 +10,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
-@JsonNaming(PropertyNamingStrategies.UpperSnakeCaseStrategy.class)
 public class CreateContactHubspotResponse {
 
     private String id;
@@ -25,8 +24,8 @@ public class CreateContactHubspotResponse {
     @AllArgsConstructor
     @Builder
     @ToString
-    @JsonNaming(PropertyNamingStrategies.UpperSnakeCaseStrategy.class)
-    private static class CreateContactHubspotResponseProperties {
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+    public static class CreateContactHubspotResponseProperties {
 
         private String company;
         private String createdate;

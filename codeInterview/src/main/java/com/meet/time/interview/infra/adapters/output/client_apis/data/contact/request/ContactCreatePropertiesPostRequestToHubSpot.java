@@ -16,6 +16,6 @@ public class ContactCreatePropertiesPostRequestToHubSpot {
     private String phone;
     private String company;
     private String website;
-    private String lifecycliestage;
+    private String lifecyclestage;
 
 }
