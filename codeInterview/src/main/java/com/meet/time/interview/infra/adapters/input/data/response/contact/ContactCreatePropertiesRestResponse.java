@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class ContactCreateRestResponse {
+public class ContactCreatePropertiesRestResponse {
 
     private String id;
     private String email;

@@ -2,6 +2,7 @@ package com.meet.time.interview.domain.mapper;
 
 import com.meet.time.interview.domain.model.Contact;
 import com.meet.time.interview.infra.adapters.input.data.request.contact.ContactPropertiesRequestDTO;
+import com.meet.time.interview.infra.adapters.input.data.response.contact.ContactCreatePropertiesRestResponse;
 import com.meet.time.interview.infra.adapters.output.client_apis.data.contact.request.ContactCreatePropertiesPostRequestToHubSpot;
 import com.meet.time.interview.infra.adapters.output.client_apis.data.contact.response.CreateContactHubspotResponse;
 import lombok.NoArgsConstructor;
@@ -55,6 +56,16 @@ public class ContactRestMapper {
                 .lastName(response.getProperties().getLastname())
                 .website(response.getProperties().getWebsite())
                 .lifeCycleStage(response.getProperties().getWebsite())
+                .build();
+    }
+
+    public ContactCreatePropertiesRestResponse toCreatedContactRestPropertiesResponse(Contact response){
+        return ObjectUtils.isEmpty(response) ? null : ContactCreatePropertiesRestResponse
+                .builder()
+                .fullName(response.getFirstName() + " " + response.getLastName())
+                .id(response.getId())
+                .email(response.getEmail())
+                .company(response.getCompany())
                 .build();
     }
 

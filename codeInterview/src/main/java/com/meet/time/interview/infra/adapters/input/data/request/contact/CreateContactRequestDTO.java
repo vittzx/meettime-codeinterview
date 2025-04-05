@@ -13,8 +13,6 @@ import java.util.List;
 @ToString
 public class CreateContactRequestDTO {
 
-
-    @NonNull
     private List<ContactPropertiesRequestDTO> contacts;
 
 }

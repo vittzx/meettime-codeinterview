@@ -1,9 +1,11 @@
 package com.meet.time.interview.infra.adapters.input;
 
 import com.meet.time.interview.application.port.input.CreateContactUseCase;
+import com.meet.time.interview.domain.enums.STATUS_RESPONSE_REST_REQUEST;
 import com.meet.time.interview.domain.mapper.ContactRestMapper;
 import com.meet.time.interview.domain.model.Contact;
 import com.meet.time.interview.infra.adapters.input.data.request.contact.CreateContactRequestDTO;
+import com.meet.time.interview.infra.adapters.input.data.response.contact.ContactCreatePropertiesRestResponse;
 import com.meet.time.interview.infra.adapters.input.data.response.contact.ContactCreateRestResponse;
 import com.meet.time.interview.infra.adapters.input.data.response.global.DefaultRestResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,13 +26,16 @@ public class ContactRestController {
     private final ContactRestMapper contactRestMapper;
 
     @PostMapping
-    public ResponseEntity<DefaultRestResponse<List<ContactCreateRestResponse>>> createContact(@RequestBody CreateContactRequestDTO request, @RequestHeader(name = "authorization") String accessToken){
+    public ResponseEntity<DefaultRestResponse<ContactCreateRestResponse>> createContact(@RequestBody CreateContactRequestDTO request, @RequestHeader(name = "authorization") String accessToken){
         log.debug("STARTED POST /v1/contact body request: {}", request);
         List<Contact> contacts = contactRestMapper.toListContact(request.getContacts());
-        contacts = createContactUseCase.createContact(contacts, accessToken);
+        List<ContactCreatePropertiesRestResponse> response = createContactUseCase.createContact(contacts, accessToken);
         log.debug("FINISHED POST /v1/contact ");
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                new DefaultRestResponse<>()
+                new DefaultRestResponse<>(
+                        STATUS_RESPONSE_REST_REQUEST.SUCCESS,
+                        ContactCreateRestResponse.builder().contacts(response).build()
+                )
         );
     }
 
