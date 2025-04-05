@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -39,6 +40,12 @@ public class GlobalHandlerRestControllerException extends ResponseEntityExceptio
     public ResponseEntity<Object> handleMethodArgumentTypeMismatchException(final MethodArgumentTypeMismatchException ex, final WebRequest request){
         log.error("Handling MethodArgumentTypeMismatchException {}", ex.getMessage());
         return createErrorResponse(HttpStatus.BAD_REQUEST, new ExceptionResponse(MessageFormat.format(FIELD_INVALID , ex.getName())));
+    }
+
+    @ExceptionHandler(value = HttpClientErrorException.Unauthorized.class)
+    public ResponseEntity<Object> handleHttpClientErrorUnauthorizedException(final HttpClientErrorException ex, final WebRequest request){
+        log.error("Handling InvalidAccessTokenException {}", ex.getMessage());
+        return createErrorResponse(HttpStatus.UNAUTHORIZED, new ExceptionResponse(INVALID_ACCESS_TOKEN));
     }
 
     @Override

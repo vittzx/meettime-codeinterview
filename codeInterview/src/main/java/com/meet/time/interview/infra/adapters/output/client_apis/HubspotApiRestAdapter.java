@@ -2,19 +2,20 @@ package com.meet.time.interview.infra.adapters.output.client_apis;
 
 import com.meet.time.interview.application.configuration.HubspotProperties;
 import com.meet.time.interview.application.port.output.HubspotUseCase;
+import com.meet.time.interview.domain.exceptions.InvalidAccessTokenException;
 import com.meet.time.interview.infra.adapters.output.client_apis.data.contact.request.ContactCreatePostRequestToHubSpot;
 import com.meet.time.interview.infra.adapters.output.client_apis.data.contact.request.ContactCreatePropertiesPostRequestToHubSpot;
 import com.meet.time.interview.infra.adapters.output.client_apis.data.contact.response.CreateContactHubspotResponse;
 import com.meet.time.interview.infra.adapters.output.client_apis.data.access_token.response.HubspotGetAccessTokenResponse;
+import com.meet.time.interview.infra.adapters.output.handler_exceptions.data.response.ExceptionResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+import static com.meet.time.interview.domain.utils.MessageConstants.INVALID_ACCESS_TOKEN;
 
 
 @Service
@@ -85,8 +86,16 @@ public class HubspotApiRestAdapter implements HubspotUseCase {
     };
 
     private void isResponseValid(ResponseEntity<?> response){
-        if (!(response.getStatusCode().is2xxSuccessful())){
-            throw new IllegalStateException(("Requisição inválida"));
+        if (!response.getStatusCode().is2xxSuccessful()){
+        log.debug("Caught Error: invalid request");
+
+            if (response.getStatusCode().equals(HttpStatus.UNAUTHORIZED)){
+                log.error("Invalid access token, unauthorized.");
+                throw new InvalidAccessTokenException(new ExceptionResponse(INVALID_ACCESS_TOKEN));
+            }
+            log.error("Cannot make request successfully status code: {}, response: {}",response.getStatusCode(), response);
+            throw new IllegalStateException("Cannot make request successfully.");
+
         }
     }
 }
