@@ -8,7 +8,7 @@ Desafio técnico para a construção de uma API RestFull com SpringBoot seguindo
 
 ## Tecnologies 
  - Java 17
- - SpringBoot (Lombok, Spring Dev Tools, Spring Starter Web,Bucket4J, Spring Cache, Caffeine)
+ - SpringBoot (Lombok, Spring Dev Tools, Spring Starter Web,Bucket4J, Spring Cache, Caffeine, Junit)
  - Maven 4.0
 
 ## Passo a passo executar a aplicação:
@@ -164,13 +164,17 @@ A api por padrão possui um rate limit de:
 
 ## Decisões
 
-- Este projeto foi feito em Arquitetura Hexagonal, para melhor exclusão de dependencias entre os Services, Adapters, Domínio na aplicação
+- Este projeto foi feito em Arquitetura Hexagonal, para melhor exclusão de dependencias entre os Services, Adapters, Domínio na aplicação e facilidade de manutenção futura em partes isoladas no código
 - Escritura em do código em Ingles (Linguagem universal)
-- Não foi utilizado o Mapper do org.mapstruct devido a erros internos da dependencias ao ler entidades
+- Não foi utilizado o Mapper do org.mapstruct devido a erros internos da dependencias ao ler entidades e realizar conversões.
 - A documentação da API foi feita no README pela praticidade e pelos poucos caso de uso, porem o ideal é ser feito no swagger;
 - Retonar a URL no response body foi a opção escolhida, pois no redirecionamento via postman estava com erro, e na web estava indo corretamente
 - O Rate limit com poucas requisições por hora é feito devido ao tipo de payload enviado para a API de Contatos. Você pode enviar uma lista que será incluido contato por contato.
 - O Response tem uma resposta padrão de com o campo 'type' e 'response' pois a implementação foi pensada na arquitetura de microsservicos
+- O uso Bucket4J pela simplicidade e praticidade.
+- O uso Junit para segurança de código nos testes unitários
+- O uso do RestTemplate pois é um recurso nativo do Spring
+
 ## Ideias
 
 - Ideal adicionar uma validação no Request (validar accessToken, adicionar um listener/fila, validar regras de negócio ) com Decorator Pattern
