@@ -2,14 +2,14 @@
 # MeetTime Code Interview
 
 Desafio técnico para a construção de uma API RestFull com SpringBoot seguindo:
-- Boas práticas de segurança
-- Boas práticas de código
-- Boas práticas de separação de responsabilidade, tratamento adequeado de erros e instruções detalhadas de como executar a aplicação
+ - Boas práticas de segurança
+ - Boas práticas de código
+ - Boas práticas de separação de responsabilidade, tratamento adequeado de erros e instruções detalhadas de como executar a aplicação
 
-## Tecnologies
-- Java 17
-- SpringBoot (Lombok, Spring Dev Tools, Spring Starter Web)
-- Maven 4.0
+## Tecnologies 
+ - Java 17
+ - SpringBoot (Lombok, Spring Dev Tools, Spring Starter Web,Bucket4J, Spring Cache, Caffeine)
+ - Maven 4.0
 
 ## Passo a passo executar a aplicação:
     1) Tenha o Java 17 (jdk-17) e o Maven (mvn) instalado e uma IDLE que seja compatível a execução do framework SpringBoot 
@@ -44,6 +44,13 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 `SERVER_PORT`
 
 ## Documentação da API
+
+#### API rate-limits
+A api por padrão possui um rate limit de:
+-  1 requisição por segundo
+-  5 requisições por minuto   
+- 100 requisições por hora.
+
 
 #### Base URL
 
@@ -81,15 +88,15 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 ```json
 {
     "contacts": [
-      {
-        "email": "user6@example.com",
-        "firstName": "Fiona",
-        "lastName": "Brown",
-        "phone": "1(555) 888-9999",
-        "company": "NextGen",
-        "website": "nextgen.com",
-        "lifeCycleStage": "opportunity"
-      }
+        {
+            "email": "user6@example.com",
+            "firstName": "Fiona",
+            "lastName": "Brown",
+            "phone": "1(555) 888-9999",
+            "company": "NextGen",
+            "website": "nextgen.com",
+            "lifeCycleStage": "opportunity"
+        }, 
     ]
 }
 ```
@@ -162,15 +169,17 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 - Não foi utilizado o Mapper do org.mapstruct devido a erros internos da dependencias ao ler entidades
 - A documentação da API foi feita no README pela praticidade e pelos poucos caso de uso, porem o ideal é ser feito no swagger;
 - Retonar a URL no response body foi a opção escolhida, pois no redirecionamento via postman estava com erro, e na web estava indo corretamente
-
+- O Rate limit com poucas requisições por hora é feito devido ao tipo de payload enviado para a API de Contatos. Você pode enviar uma lista que será incluido contato por contato.
+- O Response tem uma resposta padrão de com o campo 'type' e 'response' pois a implementação foi pensada na arquitetura de microsservicos
 ## Ideias
 
 - Ideal adicionar uma validação no Request (validar accessToken, adicionar um listener/fila, validar regras de negócio ) com Decorator Pattern
 
 - Ideal implementar um Enum para o campo "lifeCycleStage" e com Strategy Pattern
 
-- Ideal implementar um banco de dados para salvar os eventos criados e outras informações
+- Ideal implementar um banco de dados e uma fila para salvar os eventos criados e outras informações 
 
 - Ideal implementar Spring Security para acessos a API (Meet time)
+
 
 
