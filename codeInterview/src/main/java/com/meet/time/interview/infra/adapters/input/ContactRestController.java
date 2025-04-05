@@ -3,8 +3,11 @@ package com.meet.time.interview.infra.adapters.input;
 import com.meet.time.interview.application.port.input.CreateContactUseCase;
 import com.meet.time.interview.domain.enums.STATUS_RESPONSE_REST_REQUEST;
 import com.meet.time.interview.domain.mapper.ContactRestMapper;
+import com.meet.time.interview.domain.mapper.WebhookRestMapper;
 import com.meet.time.interview.domain.model.Contact;
+import com.meet.time.interview.domain.model.Webhook;
 import com.meet.time.interview.infra.adapters.input.data.request.contact.CreateContactRequestDTO;
+import com.meet.time.interview.infra.adapters.input.data.request.contact.WebhookPostRequestContactCreated;
 import com.meet.time.interview.infra.adapters.input.data.response.contact.ContactCreatePropertiesRestResponse;
 import com.meet.time.interview.infra.adapters.input.data.response.contact.ContactCreateRestResponse;
 import com.meet.time.interview.infra.adapters.input.data.response.global.DefaultRestResponse;
@@ -24,6 +27,7 @@ public class ContactRestController {
 
     private final CreateContactUseCase createContactUseCase;
     private final ContactRestMapper contactRestMapper;
+    private final WebhookRestMapper webhookRestMapper;
 
     @PostMapping
     public ResponseEntity<DefaultRestResponse<ContactCreateRestResponse>> createContact(@RequestBody CreateContactRequestDTO request, @RequestHeader(name = "authorization") String accessToken){
@@ -39,9 +43,14 @@ public class ContactRestController {
         );
     }
 
-    @PostMapping("/webhook/created")
-    public ResponseEntity webhookContactCreatedEventListener(){
-        return null;
+    @PostMapping("/webhook/listener")
+    public ResponseEntity<Void> webhookContactCreatedEventListener(@RequestBody WebhookPostRequestContactCreated body){
+        log.debug("STARTED POST /v1/contact/webhook/listener body: {}", body);
+        // todo: Service Logics
+        Webhook webhook = webhookRestMapper.toWebhook(body);
+        log.debug("Webhook converted {}", webhook);
+        log.debug("FINISHED POST /v1/contact/webhook/listener");
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }
