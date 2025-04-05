@@ -81,15 +81,15 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 ```json
 {
     "contacts": [
-        {
-            "email": "user6@example.com",
-            "firstName": "Fiona",
-            "lastName": "Brown",
-            "phone": "1(555) 888-9999",
-            "company": "NextGen",
-            "website": "nextgen.com",
-            "lifeCycleStage": "opportunity"
-        }, 
+      {
+        "email": "user6@example.com",
+        "firstName": "Fiona",
+        "lastName": "Brown",
+        "phone": "1(555) 888-9999",
+        "company": "NextGen",
+        "website": "nextgen.com",
+        "lifeCycleStage": "opportunity"
+      }
     ]
 }
 ```
