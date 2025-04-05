@@ -22,6 +22,8 @@ public class ContactService implements CreateContactUseCase {
     private final HubspotUseCase hubspotUseCase;
     private final ContactRestMapper contactRestMapper;
 
+
+    // Aqui deveria retornar List<Contacts>... e fazer o parse no controller.
     @Override
     public List<ContactCreatePropertiesRestResponse> createContact(List<Contact> contacts, String access_token) {
         log.debug("Started craetingContacts");
