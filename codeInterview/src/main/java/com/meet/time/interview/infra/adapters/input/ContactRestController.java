@@ -50,7 +50,7 @@ public class ContactRestController {
         Webhook webhook = webhookRestMapper.toWebhook(body);
         log.debug("Webhook converted {}", webhook);
         log.debug("FINISHED POST /v1/contact/webhook/listener");
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
