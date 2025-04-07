@@ -6,6 +6,8 @@ Desafio técnico para a construção de uma API RestFull com SpringBoot seguindo
  - Boas práticas de código
  - Boas práticas de separação de responsabilidade, tratamento adequeado de erros e instruções detalhadas de como executar a aplicação
 
+
+
 ## Tecnologies 
  - Java 17
  - SpringBoot (Lombok, Spring Dev Tools, Spring Starter Web,Bucket4J, Spring Cache, Caffeine, Junit)
@@ -73,6 +75,27 @@ A api por padrão possui um rate limit de:
     }
 }
 ```
+#### Endpoint de redirecionamento
+
+```http
+  GET /auth/v1/redirect
+```
+
+| Param   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `code`      | `string` | **Obrigatório**. Código do hubspot |
+
+#### Response body: status `200`
+```json
+{
+    "type": "SUCCESS",
+    "response": {
+        "accessToken": "accessToken",
+        "refreshToken": "refreshToken"
+    }
+}
+```
+
 #### Endpoint de Criação de Contato
 
 ```http
@@ -82,7 +105,6 @@ A api por padrão possui um rate limit de:
 | Header   | Tipo       | Descrição                                   |
 | :---------- | :--------- | :------------------------------------------ |
 | `authorization`      | `string` | **Obrigatório**. Bearer token |
-
 
 #### Request body:
 ```json
@@ -96,7 +118,7 @@ A api por padrão possui um rate limit de:
             "company": "NextGen",
             "website": "nextgen.com",
             "lifeCycleStage": "opportunity"
-        }, 
+        }
     ]
 }
 ```
@@ -118,7 +140,33 @@ A api por padrão possui um rate limit de:
 }
 ```
 
-#### Cenários de Erro
+
+### Enpoint de recebimento do webhook de contratos
+```http
+  POST /v1/contact/webhook/listener
+```
+
+#### Request body:
+```json
+{
+  "appId": 1001,
+  "eventId": 2002,
+  "portalId": 3003,
+  "objectId": 4004,
+  "subscriptionId": 5005,
+  "subscriptionType": "PREMIUM",
+  "changeSource": "SYSTEM",
+  "changeFlag": "UPDATED",
+  "occurredAt": 1712496000000,
+  "attemptNumber": 1
+}
+```
+
+#### Response body: status `204` No content
+
+
+
+### Cenários de Erro
 
 
 #### Erro interno: status `500`
@@ -127,6 +175,17 @@ A api por padrão possui um rate limit de:
     "type": "ERROR",
     "response": {
         "message":"Internal server error."
+    }
+}
+```
+
+
+#### Limite de requisiçoes no período de tempo excedido: status `429`
+```json
+{
+    "type": "ERROR",
+    "response": {
+        "message":"Too many requests."
     }
 }
 ```
