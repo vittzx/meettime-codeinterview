@@ -1,10 +1,13 @@
 
-# MeetTime Code Interview
+# Projeto Técnico Integração com Hubspot
 
 Desafio técnico para a construção de uma API RestFull com SpringBoot seguindo:
  - Boas práticas de segurança
  - Boas práticas de código
  - Boas práticas de separação de responsabilidade, tratamento adequeado de erros e instruções detalhadas de como executar a aplicação
+ - Realizar criação de access_token
+ - Realizar criação de um contato na Hubspot
+ - Escutar o webhook da Hubspot
 
 
 
